@@ -2,8 +2,6 @@ package com.shsxt.crm.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,8 +24,12 @@ public class SaleChanceController extends BaseController {
 	private SaleChanceService saleChanceService;
 	
 	@RequestMapping("index")
-	public String index(HttpServletRequest request, Model model) {
-		return "sale_chance";
+	public String index(Integer state) {
+		if (state == null) {
+			return "sale_chance";
+		} else {
+			return "customer_dev";
+		}
 	}
 	
 	@RequestMapping("list")
@@ -61,6 +63,17 @@ public class SaleChanceController extends BaseController {
 //			return new ResultInfo(e.getMessage());
 			return failure(e.getMessage());
 		}
+	}
+	
+	/**
+	 * 跳转到开发计划项
+	 * @return
+	 */
+	@RequestMapping("detail")
+	public String findDetail(Integer saleChanceId, Integer show, Model model) {
+		model.addAttribute("saleChanceId", saleChanceId);
+		model.addAttribute("show", show);
+		return "customer_dev_detail";
 	}
 	
 }
