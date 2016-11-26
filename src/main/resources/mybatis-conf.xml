@@ -1,10 +1,10 @@
-<!DOCTYPE configuration    
+<!-- <!DOCTYPE configuration    
     PUBLIC "-//mybatis.org//DTD Config 3.0//EN"    
-    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">-->
     
-<!-- <!DOCTYPE configuration   
+<!DOCTYPE configuration   
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
-"file:/D:/mybatis-3-config.dtd">  -->
+"file:/D:/mybatis-3-config.dtd">  
 
 <configuration>
 	<typeAliases>

@@ -1,13 +1,13 @@
 package com.shsxt.crm.model;
 
-import java.io.Serializable;
+import com.shsxt.base.BaseModel;
 
 /**
  * 客户实体类
  * Created by Tony on 2016/8/24.
  */
 @SuppressWarnings("serial")
-public class Customer implements Serializable {
+public class Customer extends BaseModel {
     private Integer id; // 编号
     private String khno; // 客户编号 动态生成
     private String name; // 客户名称

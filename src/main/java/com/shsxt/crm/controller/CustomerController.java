@@ -7,12 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.shsxt.base.BaseController;
 import com.shsxt.crm.service.CustomerService;
 import com.shsxt.crm.vo.CustomerVo;
 
 @Controller
 @RequestMapping("customer")
-public class CustomerController {
+public class CustomerController extends BaseController {
 	
 	@Autowired
 	private CustomerService customerService;

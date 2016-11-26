@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.shsxt.base.BaseDao;
 import com.shsxt.crm.model.User;
 
-public interface UserDao {
+public interface UserDao extends BaseDao<User> {
 
 	public List<User> listAll();
 	

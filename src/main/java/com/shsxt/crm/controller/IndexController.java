@@ -7,13 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.shsxt.base.BaseController;
 import com.shsxt.crm.service.UserService;
 import com.shsxt.crm.util.LoginUserUtil;
 import com.shsxt.crm.vo.LoginUserInfo;
 
 @Controller
 @RequestMapping("")
-public class IndexController {
+public class IndexController extends BaseController {
 	
 	@Autowired
 	private UserService userService;
@@ -25,7 +26,6 @@ public class IndexController {
 	
 	@RequestMapping("main")
 	public String main(Model model, HttpServletRequest request) {
-		model.addAttribute("ctx", request.getContextPath());
 		Integer userId = LoginUserUtil.loadUserIdFromCookie(request);
 		LoginUserInfo loginUserInfo = userService.findLoginUser(userId);
 		model.addAttribute("currentUser", loginUserInfo);
