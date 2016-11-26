@@ -37,12 +37,12 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	@ResponseBody
 	public ResultInfo login(String userName, String password, String roleName) {
-		try {
+//		try {
 			UserLoginIdentity result = userService.login(userName, password, roleName);
 			return success(result);
-		} catch (ParamException e) {
-			return failure(e.getMessage());
-		}
+//		} catch (ParamException e) {
+//			return failure(e.getMessage());
+//		}
 		
 	}
 	
