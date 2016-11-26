@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.security.auth.login.LoginException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +12,7 @@ import com.shsxt.base.exception.ParamException;
 import com.shsxt.crm.constant.Constant;
 import com.shsxt.crm.dao.UserDao;
 import com.shsxt.crm.model.User;
+import com.shsxt.crm.util.AssertUtil;
 import com.shsxt.crm.util.MD5Util;
 import com.shsxt.crm.util.UserIDBase64;
 import com.shsxt.crm.vo.LoginUserInfo;
@@ -40,22 +40,26 @@ public class UserService {
 			String roleName) {
 		
 		// 基本参数验证
-		if (StringUtils.isBlank(userName)) {
-			throw new ParamException("请输入用户名");
-		}
-		if (StringUtils.isBlank(password)) {
-			throw new ParamException("请输入密码");
-		}
-		if (StringUtils.isBlank(roleName)) {
-			throw new ParamException("请选择用户类型");
-		}
+//		if (StringUtils.isBlank(userName)) {
+//			throw new ParamException("请输入用户名");
+//		}
+//		if (StringUtils.isBlank(password)) {
+//			throw new ParamException("请输入密码");
+//		}
+//		if (StringUtils.isBlank(roleName)) {
+//			throw new ParamException("请选择用户类型");
+//		}
+		AssertUtil.notEmpty(userName, "请输入用户名");
+		AssertUtil.notEmpty(password, "请输入密码");
+		AssertUtil.notEmpty(roleName, "请选择用户类型");
 		// 用户是否存在
 		password = MD5Util.md5Method(password); // md5加密
 		User user = userDao.findUserByUserNamePwdRole(userName.trim(),
 				password, roleName.trim());
-		if (user == null) {
-			throw new ParamException("用户名或密码错误.");
-		}
+//		if (user == null) {
+//			throw new ParamException("用户名或密码错误.");
+//		}
+		AssertUtil.notNull(user, "用户名或密码错误.");
 		
 		// 封装返回对象
 		UserLoginIdentity userLoginIdentity = new UserLoginIdentity();
@@ -147,6 +151,13 @@ public class UserService {
 	 */
 	private static void checkUptPwdParams(String oldPassword, 
 			String newPassword, String confirmPassword) {
+		
+		AssertUtil.notEmpty(oldPassword, "请输入旧密码");
+		AssertUtil.notEmpty(newPassword, "请输入新密码");
+		AssertUtil.notEmpty(confirmPassword, "请输入确认密码");
+		AssertUtil.isTrue(!confirmPassword.equals(newPassword), "确认密码不一致");
+		
+		/*
 		if (StringUtils.isBlank(oldPassword)) {
 			throw new ParamException("请输入旧密码");
 		}
@@ -158,6 +169,6 @@ public class UserService {
 		}
 		if (!confirmPassword.equals(newPassword)) {
 			throw new ParamException("确认密码不一致");
-		}
+		}*/
 	}
 }
