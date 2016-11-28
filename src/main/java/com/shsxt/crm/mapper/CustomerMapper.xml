@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shsxt.crm.dao.CustomerDao">
+
+    <sql id="Customer_Columns" >
+        id, khno,name,area,cusManager,level,myd,xyd,address,postCode,phone,fax,website,yyzzzch,fr,zczj,nyye,
+        khyh,khzh,dsdjh,gsdjh,state,IsValid,CreateDate,UpdateDate
+    </sql>
+
+    <select id="selectForPage" resultType="Customer">
+        select <include refid="Customer_Columns" /> from t_customer
+        <where>
+            isValid = 1
+            <if test="@Ognl@isNotEmpty(khno)">
+                AND khno LIKE '%${khno}%'
+            </if>
+            <if test="@Ognl@isNotEmpty(name)">
+                AND name LIKE '%${name}%'
+            </if>
+        </where>
+    </select>
+
+    <select id="loadById" resultType="Customer">
+        select <include refid="Customer_Columns" /> from t_customer where id=#{id}
+    </select>
+    <select id="findNormalCustomer" resultType="Customer">
+        select id, name from t_customer where state=0 and isValid=1
+    </select>
+
+    <insert id="insert">
+        insert into t_customer (
+              khno,name,area,cusManager,level,myd,xyd,address,postCode,phone,fax,website,yyzzzch,fr,zczj,nyye,
+              khyh,khzh,dsdjh,gsdjh,state,IsValid,CreateDate,UpdateDate
+        ) values(
+              #{khno}, #{name}, #{area}, #{cusManager}, #{level}, #{myd}, #{xyd}, #{address}, #{postCode},
+              #{phone}, #{fax}, #{website}, #{yyzzzch}, #{fr}, #{zczj}, #{nyye}, #{khyh}, #{khzh}, #{dsdjh},
+              #{gsdjh}, #{state}, 1, now(), now()
+        )
+    </insert>
+
+    <update id="update" >
+        update t_customer
+        <set>
+            <if test="@Ognl@isNotEmpty(khno)">
+                khno=#{khno},
+            </if>
+            <if test="@Ognl@isNotEmpty(name)">
+                name=#{name},
+            </if>
+            <if test="@Ognl@isNotEmpty(area)">
+                area=#{area},
+            </if>
+            <if test="@Ognl@isNotEmpty(cusManager)">
+                cusManager=#{cusManager},
+            </if>
+            <if test="@Ognl@isNotEmpty(level)">
+                level=#{level},
+            </if>
+            <if test="@Ognl@isNotEmpty(myd)">
+                myd=#{myd},
+            </if>
+            <if test="@Ognl@isNotEmpty(xyd)">
+                xyd=#{xyd},
+            </if>
+            <if test="@Ognl@isNotEmpty(address)">
+                address=#{address},
+            </if>
+            <if test="@Ognl@isNotEmpty(postCode) ">
+                postCode=#{postCode},
+            </if>
+            <if test="@Ognl@isNotEmpty(phone)">
+                phone=#{phone},
+            </if>
+            <if test="@Ognl@isNotEmpty(fax) ">
+                fax=#{fax},
+            </if>
+            <if test="@Ognl@isNotEmpty(website)">
+                website=#{website},
+            </if>
+            <if test="@Ognl@isNotEmpty(yyzzzch)">
+                yyzzzch=#{yyzzzch},
+            </if>
+            <if test="@Ognl@isNotEmpty(fr)">
+                fr=#{fr},
+            </if>
+            <if test="@Ognl@isNotEmpty(zczj)">
+                zczj=#{zczj},
+            </if>
+            <if test="@Ognl@isNotEmpty(nyye)">
+                nyye=#{nyye},
+            </if>
+            <if test="@Ognl@isNotEmpty(khyh)">
+                khyh=#{khyh},
+            </if>
+            <if test="@Ognl@isNotEmpty(khzh)">
+                khzh=#{khzh},
+            </if>
+            <if test="@Ognl@isNotEmpty(dsdjh)">
+                dsdjh=#{dsdjh},
+            </if>
+            <if test="@Ognl@isNotEmpty(gsdjh)">
+                gsdjh=#{gsdjh},
+            </if>
+            <if test="state!=0">
+                state=#{state},
+            </if>
+            UpdateDate = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteBatch">
+        update t_customer
+        set isValid = 0,  UpdateDate = now()
+        where id in (${ids})
+    </update>
+
+    <!--查询六个月前添加的没有下单的客户-->
+    <select id="findNoOrdersCustomer" resultType="Customer" >
+        SELECT <include refid="Customer_Columns" /> FROM t_customer t1
+        WHERE id NOT IN (SELECT cusId FROM t_customer_order WHERE IsValid=1 )
+        AND t1.state = 0 AND DATE_ADD(CreateDate, INTERVAL 6 MONTH) &gt;= now()
+    </select>
+
+    <!--查询六个月没下单的客户-->
+    <select id="findLossCustomer" resultType="Customer">
+        SELECT
+          <include refid="Customer_Columns" />
+        FROM
+          t_customer t1
+        WHERE
+          id NOT IN (
+            SELECT
+              cusId
+            FROM
+              t_customer_order
+            WHERE
+              DATE_ADD(orderDate, INTERVAL 6 MONTH) > NOW()
+            )
+        AND t1.state = 0
+        AND DATE_ADD(CreateDate, INTERVAL 6 MONTH) &gt;= NOW();
+    </select>
+
+<!-- 
+    <select id="findCustomerGx" resultType="CustomerGx">
+        SELECT t1.name,SUM(t3.sum) AS gx FROM t_customer t1 LEFT JOIN t_customer_order t2 ON t1.id=t2.cusId LEFT JOIN t_order_details t3 ON t2.id=t3.orderId
+        <where>
+            <if test="@Ognl@isNotEmpty(name)">
+                and t1.name like '%${name}%'
+            </if>
+        </where>
+        GROUP BY t1.id
+    </select>
+
+    <select id="findCustomerGc" resultType="CustomerGc">
+        SELECT LEVEL AS customerLevel ,COUNT(LEVEL) AS customerNum FROM t_customer GROUP BY LEVEL;
+    </select>
+
+    <select id="findCustomerFw" resultType="CustomerFw">
+        SELECT serveType , COUNT(serveType) AS num FROM t_customer_serve GROUP BY serveType;
+    </select> -->
+
+</mapper>

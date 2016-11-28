@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shsxt.crm.dao.CusDevPlanDao" >
+	
+	<sql id="CusDevPlan_Columns" >
+        id, saleChanceId, planItem, planDate, exeAffect, CreateDate, UpdateDate, IsValid
+    </sql>
+
+    <select id="find" resultType="CusDevPlan">
+        select <include refid="CusDevPlan_Columns" /> from t_cus_dev_plan
+        <where>
+            isValid = 1
+            <if test="@Ognl@isNotEmpty(saleChanceId)">
+                and saleChanceId = #{saleChanceId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert">
+        insert into t_cus_dev_plan (
+          saleChanceId, planItem, planDate, exeAffect, CreateDate, UpdateDate, IsValid
+        ) values(
+          #{saleChanceId}, #{planItem}, #{planDate}, #{exeAffect}, now(), now(), 1
+        )
+    </insert>
+
+    <update id="update" >
+        update t_cus_dev_plan
+        <set>
+            <if test="@Ognl@isNotEmpty(planItem)">
+                planItem = #{planItem},
+            </if>
+            <if test="@Ognl@isNotEmpty(planDate)">
+                planDate = #{planDate},
+            </if>
+            <if test="@Ognl@isNotEmpty(exeAffect)">
+                exeAffect = #{exeAffect},
+            </if>
+            UpdateDate = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="delete">
+        update t_cus_dev_plan
+        set isValid = 0,  UpdateDate = now()
+        where id = #{id}
+    </update>
+	
+	
+</mapper>

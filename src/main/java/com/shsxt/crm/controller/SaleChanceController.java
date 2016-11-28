@@ -79,4 +79,11 @@ public class SaleChanceController extends BaseController {
 		return "customer_dev_detail";
 	}
 	
+	@RequestMapping("update_devresult")
+	@ResponseBody
+	public ResultInfo dateDevresult(Integer id, Integer devResult) {
+		saleChanceService.updateDevResult(id, devResult);
+		return success(Constant.OPT_SUCCESS);
+	}
+	
 }

@@ -20,7 +20,7 @@ public class Customer extends BaseModel {
     private String postCode; // 邮政编码
     private String phone; // 联系电话
     private String fax; // 传真
-    private String webSite; // 网址
+    private String website; // 网址
     private String yyzzzch; // 营业执照注册号
     private String fr; // 法人
     private String zczj; // 注册资金(万元)
@@ -127,15 +127,15 @@ public class Customer extends BaseModel {
         this.fax = fax;
     }
 
-    public String getWebSite() {
-        return webSite;
-    }
+    public String getWebsite() {
+		return website;
+	}
 
-    public void setWebSite(String webSite) {
-        this.webSite = webSite;
-    }
+	public void setWebsite(String website) {
+		this.website = website;
+	}
 
-    public String getYyzzzch() {
+	public String getYyzzzch() {
         return yyzzzch;
     }
 

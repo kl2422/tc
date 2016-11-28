@@ -40,5 +40,5 @@ function openDevPlanTab(id, show) {
 		title = '查看客户开发计划项';
 	}
 	var url = 'sale_chance/detail?saleChanceId=' + id + '&show=' + show;
-	window.parent.openTab(title, url, 'icon-khkfjh');
+	window.parent.refreshTab(title, url, 'icon-khkfjh');
 }

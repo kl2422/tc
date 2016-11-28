@@ -113,4 +113,16 @@ public class SaleChanceService {
 		SaleChance saleChance = saleChanceDao.loadById(saleChanceId);
 		return saleChance;
 	}
+	
+	/**
+	 * 更新开发状态
+	 * @param saleChanceId
+	 * @param devResult
+	 */
+	public void updateDevResult(Integer saleChanceId, int devResult) {
+		SaleChance saleChance = findById(saleChanceId);
+		AssertUtil.isTrue(saleChance == null, "该营销机会不存在。");
+		saleChance.setDevResult(devResult);
+		saleChanceDao.update(saleChance);
+	}
 }

@@ -14,6 +14,29 @@ function openTab(text, url, iconCls){
     }
 }
 
+// 关闭选项卡
+function closeTab(text){
+    if($("#tabs").tabs("exists",text)){
+        $("#tabs").tabs("close",text); // 关闭选项卡
+    }
+}
+
+// 刷新选项卡
+function refreshTab(text, url, iconCls) {
+    if($("#tabs").tabs("exists",text)) {  // 先判断是否存在这个选项卡
+    	// 存在就刷新
+//         var tab = $("#tabs").tabs("getTab",text); // 根据标题获取选项卡
+        // 刷新
+//         tab.panel('refresh', url);
+    	closeTab(text);
+    	openTab(text, url, iconCls);
+    } else {
+    	// 重新打开
+    	openTab(text, url, iconCls); 
+    }
+}
+
+
 function openPasswordModifyDialog(){
     $("#dlg").dialog("open").dialog("setTitle","修改密码");
 }
