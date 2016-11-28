@@ -5,10 +5,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.shsxt.base.BaseDao;
 import com.shsxt.crm.model.SaleChance;
 import com.shsxt.crm.query.SaleChanceQuery;
 
-public interface SaleChanceDao {
+public interface SaleChanceDao extends BaseDao<SaleChance> {
 	
 	/**
 	 * 分页查询

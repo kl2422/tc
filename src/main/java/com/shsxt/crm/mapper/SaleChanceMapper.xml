@@ -35,6 +35,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	    </select>
 	    
+	    <select id="loadById" resultType="SaleChance" >
+	        SELECT
+	          <include refid="SaleChance_Columns" />
+	        FROM
+	          t_sale_chance
+	        where id = #{id}
+	    </select>   
+	    
+	    
 	   <insert id="insert" useGeneratedKeys="true" keyProperty="id" >
 	    insert into t_sale_chance (
 	   	  chanceSource, customerId, customerName, cgjl, overview, linkMan, linkPhone, description, createMan,

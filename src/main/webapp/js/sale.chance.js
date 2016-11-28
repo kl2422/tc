@@ -8,7 +8,7 @@ function searchSaleChance() {
     });
 }
 // 格式化状态
-function formatState(val, row){
+function formatState(val, row) {
 	console.log(row);
     if(val == 1) {
         return "已分配";

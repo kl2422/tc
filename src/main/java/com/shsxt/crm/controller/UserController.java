@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.shsxt.base.BaseController;
 import com.shsxt.base.ResultInfo;
 import com.shsxt.base.exception.ParamException;
 import com.shsxt.crm.constant.Constant;
@@ -21,7 +22,7 @@ import com.shsxt.crm.vo.UserLoginIdentity;
 
 @Controller
 @RequestMapping("user")
-public class UserController {
+public class UserController extends BaseController {
 	
 	@Autowired
 	private UserService userService;
@@ -36,12 +37,12 @@ public class UserController {
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	@ResponseBody
 	public ResultInfo login(String userName, String password, String roleName) {
-		try {
+//		try {
 			UserLoginIdentity result = userService.login(userName, password, roleName);
-			return new ResultInfo(result);
-		} catch (ParamException e) {
-			return new ResultInfo(Constant.RESULT_ERROR, e.getMessage());
-		}
+			return success(result);
+//		} catch (ParamException e) {
+//			return failure(e.getMessage());
+//		}
 		
 	}
 	
@@ -53,9 +54,9 @@ public class UserController {
 			Integer userId = LoginUserUtil.loadUserIdFromCookie(request);
 			userService.updatePassword(oldPassword, newPassword, 
 					confirmPassword, userId);
-			return new ResultInfo(Constant.OPT_SUCCESS);
+			return success(Constant.OPT_SUCCESS);
 		} catch (ParamException e) {
-			return new ResultInfo(Constant.RESULT_ERROR, e.getMessage());
+			return failure(e.getMessage());
 		}
 		
 	}

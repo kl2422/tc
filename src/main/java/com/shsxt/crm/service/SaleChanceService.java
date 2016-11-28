@@ -9,8 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.miemiedev.mybatis.paginator.domain.Order;
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.shsxt.base.exception.ParamException;
 import com.shsxt.crm.constant.SaleChanceDevResult;
@@ -18,6 +16,7 @@ import com.shsxt.crm.constant.SaleChanceState;
 import com.shsxt.crm.dao.SaleChanceDao;
 import com.shsxt.crm.model.SaleChance;
 import com.shsxt.crm.query.SaleChanceQuery;
+import com.shsxt.crm.util.AssertUtil;
 
 @Service
 public class SaleChanceService {
@@ -32,11 +31,11 @@ public class SaleChanceService {
 	public Map<String, Object> selectForPage(SaleChanceQuery query) {
 		
 		// 构建查询的分页参数
-		PageBounds pageBounds = new PageBounds(query.getPage(), 
-				query.getLimit(), Order.formString(query.getSort()));
+//		PageBounds pageBounds = new PageBounds(query.getPage(), 
+//				query.getLimit(), Order.formString(query.getSort()));
 		
 		// 分页查询
-		List<SaleChance> saleChances = saleChanceDao.selectForPage(query, pageBounds);
+		List<SaleChance> saleChances = saleChanceDao.selectForPage(query, query.initPageBounds());
 		
 		//获得结果集
 		PageList<SaleChance> pageList = (PageList<SaleChance>)saleChances;
@@ -102,5 +101,16 @@ public class SaleChanceService {
 			throw new ParamException("请选择要删除的记录");
 		}
 		saleChanceDao.deleteBatch(ids);
+	}
+	
+	/**
+	 * 根据id获取到营销机会的内容
+	 * @param saleChanceId
+	 * @return
+	 */
+	public SaleChance findById(Integer saleChanceId) {
+		AssertUtil.isTrue(saleChanceId == null || saleChanceId < 1, "请选择一条记录进行操作");
+		SaleChance saleChance = saleChanceDao.loadById(saleChanceId);
+		return saleChance;
 	}
 }
