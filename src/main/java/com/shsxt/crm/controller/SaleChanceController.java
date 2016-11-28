@@ -71,6 +71,9 @@ public class SaleChanceController extends BaseController {
 	 */
 	@RequestMapping("detail")
 	public String findDetail(Integer saleChanceId, Integer show, Model model) {
+		
+		SaleChance saleChance = saleChanceService.findById(saleChanceId);
+		model.addAttribute("saleChance", saleChance);
 		model.addAttribute("saleChanceId", saleChanceId);
 		model.addAttribute("show", show);
 		return "customer_dev_detail";

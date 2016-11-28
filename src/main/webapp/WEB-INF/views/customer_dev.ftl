@@ -15,7 +15,7 @@
         <th field="chanceSource" width="200" align="center" hidden="true">机会来源</th>
         <th field="customerName" width="80" align="center">客户名称</th>
         <th field="cgjl" width="50" align="center" hidden="true">成功几率</th>
-        <th field="overView" width="150" align="center">概要</th>
+        <th field="overview" width="150" align="center">概要</th>
         <th field="linkMan" width="80" align="center">联系人</th>
         <th field="linkPhone" width="100" align="center" hidden="true">联系电话</th>
         <th field="description" width="200" align="center" hidden="true">机会描述</th>
