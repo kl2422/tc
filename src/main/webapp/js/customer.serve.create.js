@@ -1,17 +1,12 @@
 $(document).ready(function() {
-    $("#createPeople").val($.cookie('userName'));
+	var createMan = $.cookie("userName");
+	$("#createPeople").val(createMan);
 });
-function resetValue(){
-    $("#serveType").combobox("setValue","");
-    $("#customer").val("");
-    $("#overview").val("");
-    $("#serviceRequest").val("");
-}
 
-function saveCustomerService(){
-    var url = ctx + "/customer_serve/add_update";
-    $("#fm").form("submit",{
-        url : url,
+// 保存
+function saveCustomerService () {
+	$("#fm").form("submit",{
+        url : ctx + "/customer_serve/add_update",
         onSubmit: function(){
             return $(this).form("validate");
         },
@@ -26,4 +21,11 @@ function saveCustomerService(){
             }
         }
     });
+}
+
+function resetValue() {
+	$("#serveType").combobox("setValue", "");
+	$("#customer").val("");
+	$("#overview").val("");
+	$("#serviceRequest").val("");
 }

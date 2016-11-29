@@ -2,6 +2,8 @@ package com.shsxt.crm.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.shsxt.base.BaseModel;
 
@@ -20,9 +22,11 @@ public class CustomerServe extends BaseModel {
     private String serviceRequest; // 服务请求
     private String createPeople; // 创建人
     private String assigner; // 分配人
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date assignTime; // 分配日期
     private String serviceProce; // 服务处理
     private String serviceProcePeople; // 服务处理人
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date serviceProceTime; // 服务处理日期
     private String serviceProceResult; // 服务处理结果
     private String myd; // 客户满意度
