@@ -1,11 +1,11 @@
 $(function() {
     var lossId = $("#lossId").val();
-    $.post(ctx + "/customer_loss/detail", {id: lossId}, function(result) {
-        $("#cusNo").val(result.cusNo);
-        $("#cusName").val(result.cusName);
-        $("#cusManager").val(result.cusManager);
-        $("#lastOrderTime").val(result.lastOrderTime);
-    });
+//    $.post(ctx + "/customer_loss/detail", {id: lossId}, function(result) {
+//        $("#cusNo").val(result.cusNo);
+//        $("#cusName").val(result.cusName);
+//        $("#cusManager").val(result.cusManager);
+//        $("#lastOrderTime").val(result.lastOrderTime);
+//    });
 
     $("#dg").edatagrid({
         url: 'list?lossId=' + lossId,

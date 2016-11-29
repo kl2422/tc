@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shsxt.crm.dao.CustomerReprieveDao">
+
+    <sql id="CustomerReprieve_Columns">
+        id, lossId, measure, createDate, updateDate, isValid
+    </sql>
+
+    <select id="selectForPage" parameterType="Map" resultType="CustomerReprieve">
+        select <include refid="CustomerReprieve_Columns" /> from t_customer_reprieve
+        <where>
+            isValid = 1
+            <if test="@Ognl@isNotEmpty(lossId) ">
+                and lossId = #{lossId}
+            </if>
+        </where>
+
+    </select>
+    
+    <select id="findLossReprieve" resultType="CustomerReprieve">
+        select <include refid="CustomerReprieve_Columns" /> from t_customer_reprieve
+        <where>
+            isValid = 1
+            <if test="@Ognl@isNotEmpty(lossId) ">
+                and lossId = #{lossId}
+            </if>
+        </where>
+
+    </select>
+
+    <insert id="insert">
+        insert into t_customer_reprieve (
+          lossId, measure, createDate, updateDate, isValid
+        ) values(
+          #{lossId}, #{measure}, now(), now(), 1)
+    </insert>
+
+    <update id="update">
+        update t_customer_reprieve
+        <set>
+            <if test="@Ognl@isNotEmpty(measure)">
+                measure = #{measure},
+            </if>
+            updateDate = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="delete" >
+        udpate t_customer_reprieve set isValid = 0, updateDate = now() where id = #{id}
+    </update>
+
+</mapper>
