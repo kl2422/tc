@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shsxt.crm.dao.LinkManDao">
+    <sql id="LinkMan_Columns">
+      id, cusId, linkName, sex, zhiwei, officePhone, phone, createDate, updateDate, isValid
+    </sql>
+
+    <select id="selectForPage" resultType="LinkMan">
+        select <include refid="LinkMan_Columns" /> from t_customer_linkman
+        <where>
+            isValid = 1
+            <if test="@Ognl@isNotEmpty(cusId)">
+                and cusId = #{cusId}
+            </if>
+        </where>
+    </select>
+
+
+    <insert id="insert">
+        insert into t_customer_linkman (
+            cusId, linkName, sex, zhiwei, officePhone, phone, createDate, updateDate, isValid
+          ) values(
+            #{cusId}, #{linkName}, #{sex}, #{zhiwei}, #{officePhone}, #{phone}, now(), now(), 1
+        )
+    </insert>
+
+    <update id="update">
+        update t_customer_linkman
+        <set>
+            <if test="@Ognl@isNotEmpty(linkName)">
+                linkName = #{linkName},
+            </if>
+            <if test="@Ognl@isNotEmpty(sex)">
+                sex = #{sex},
+            </if>
+            <if test="@Ognl@isNotEmpty(zhiwei)">
+                zhiwei = #{zhiwei},
+            </if>
+            <if test="@Ognl@isNotEmpty(officePhone)">
+                officePhone = #{officePhone},
+            </if>
+            <if test="@Ognl@isNotEmpty(phone)">
+                phone = #{phone},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="delete">
+        update t_customer_linkman set isValid = 0, updateDate = now() where id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shsxt.crm.dao.OrderDao">
+
+    <sql id="Order_Columns">
+        id, cusId, orderNo, orderDate, address, state, createDate, updateDate, isValid
+    </sql>
+
+    <select id="selectForPage" resultType="Order">
+        select <include refid="Order_Columns" /> from t_customer_order
+        <where>
+            isValid = 1
+            <if test="@Ognl@isNotEmpty(cusId)">
+                and cusId = #{cusId}
+            </if>
+        </where>
+    </select>
+
+    <select id="loadById" resultType="Order">
+        select <include refid="Order_Columns" /> from t_customer_order where id = #{id}
+    </select>
+
+    <select id="findLastOrderByCusId" resultType="Order">
+        SELECT <include refid="Order_Columns" /> FROM t_customer_order WHERE cusId = #{cusId} ORDER BY orderdate DESC LIMIT 1;
+    </select>
+</mapper>

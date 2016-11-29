@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shsxt.crm.dao.OrderDetailsDao">
+    <sql id="OrderDetails_Columns">
+        id, orderId, goodsName, goodsNum, unit, price, sum, createDate, updateDate, isValid
+    </sql>
+
+    <select id="selectForPage" resultType="OrderDetails" >
+        select <include refid="OrderDetails_Columns"/> from t_order_details
+        <where>
+            isValid = 1
+            <if test="@Ognl@isNotEmpty(orderId)">
+                and orderId = #{orderId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getTotalPriceByOrderId" parameterType="Integer" resultType="Float">
+        select sum(sum) from t_order_details where orderId = #{orderId} and isValid = 1
+    </select>
+</mapper>

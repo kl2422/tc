@@ -1,8 +1,8 @@
 var url;
 function searchCustomer() {
     $("#dg").datagrid('load', {
-        "khno":$("#s_khno").val(),
-        "name":$("#s_name").val()
+        "customerNo":$("#s_khno").val(),
+        "customerName":$("#s_name").val()
     });
 }
 
@@ -101,10 +101,10 @@ function deleteCustomer() {
     for(var i=0;i<selectedRows.length;i++) {
         strIds.push(selectedRows[i].id);
     }
-    var ids=strIds.join(",");
+    var ids=strIds.join(","); // 将数据转化成字符串以逗号分隔
     $.messager.confirm("系统提示","您确定要删除这<font color=red>"+selectedRows.length+"</font>条数据吗？", function(r) {
         if(r){
-            $.post("\delete",{ids:ids},function(result){
+            $.post("delete",{ids:ids},function(result){
                 if(result.resultCode == 1) {
                     $.messager.alert("系统提示","数据已成功删除！");
                     $("#dg").datagrid("reload");
@@ -116,29 +116,32 @@ function deleteCustomer() {
     });
 }
 
+// 打开联系人的选项卡
 function openCustomerLinkMan() {
     var selectedRows=$("#dg").datagrid("getSelections");
     if(selectedRows.length != 1) {
         $.messager.alert("系统提示","请选择一条要管理的数据！");
         return;
     }
-    window.parent.openTab('客户联系人管理','../link_man/index?cusId=' + selectedRows[0].id,'icon-lxr');
+    window.parent.refreshTab('客户联系人管理', ctx + '/link_man/index?cusId=' + selectedRows[0].id,'icon-lxr');
 }
 
+// 打开交往记录的选项卡
 function openCustomerContact() {
     var selectedRows = $("#dg").datagrid("getSelections");
     if(selectedRows.length != 1) {
         $.messager.alert("系统提示","请选择一条要管理的数据！");
         return;
     }
-    window.parent.openTab('客户交往记录管理','../contact/index?cusId='+selectedRows[0].id,'icon-jwjl');
+    window.parent.refreshTab('客户交往记录管理', ctx + '/contact/index?cusId='+selectedRows[0].id,'icon-jwjl');
 }
 
+//打开客户订单的选项卡
 function openCustomerOrder() {
     var selectedRows = $("#dg").datagrid("getSelections");
     if(selectedRows.length != 1) {
         $.messager.alert("系统提示","请选择一条要管理的数据！");
         return;
     }
-    window.parent.openTab('客户历史订单查询','order/index?cusId=' + selectedRows[0].id, 'icon-lsdd');
+    window.parent.refreshTab('客户历史订单查询', ctx + '/order/index?cusId=' + selectedRows[0].id, 'icon-lsdd');
 }

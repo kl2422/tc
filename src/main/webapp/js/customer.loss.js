@@ -23,5 +23,5 @@ function formatAction(val, row) {
 }
 
 function openCustomerReprieve(id) {
-    window.parent.openTab('客户流失暂缓措施管理' , ctx + 'customer_reprieve/index?lossId=' + id, 'icon-khlsgl');
+    window.parent.refreshTab('客户流失暂缓措施管理' , ctx + '/customer_reprieve/index?lossId=' + id, 'icon-khlsgl');
 }

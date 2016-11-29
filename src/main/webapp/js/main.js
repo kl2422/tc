@@ -1,5 +1,3 @@
-var url;
-
 function openTab(text, url, iconCls){
     if($("#tabs").tabs("exists",text)){
         $("#tabs").tabs("select",text);

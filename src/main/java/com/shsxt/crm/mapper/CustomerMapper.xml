@@ -13,11 +13,11 @@
         select <include refid="Customer_Columns" /> from t_customer
         <where>
             isValid = 1
-            <if test="@Ognl@isNotEmpty(khno)">
-                AND khno LIKE '%${khno}%'
+            <if test="@Ognl@isNotEmpty(customerNo)">
+                AND khno LIKE '%${customerNo}%'
             </if>
-            <if test="@Ognl@isNotEmpty(name)">
-                AND name LIKE '%${name}%'
+            <if test="@Ognl@isNotEmpty(customerName)">
+                AND name LIKE '%${customerName}%'
             </if>
         </where>
     </select>

@@ -6,6 +6,7 @@ import java.io.Serializable;
 public class CustomerVo implements Serializable {
 	
 	private Integer id;
+	private String customerNo;
 	private String name;
 	public Integer getId() {
 		return id;
@@ -18,5 +19,11 @@ public class CustomerVo implements Serializable {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getCustomerNo() {
+		return customerNo;
+	}
+	public void setCustomerNo(String customerNo) {
+		this.customerNo = customerNo;
 	}
 }	

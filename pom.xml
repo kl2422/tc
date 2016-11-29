@@ -179,7 +179,7 @@
                 <target>1.7</target>
                 <encoding>UTF-8</encoding>
                 <compilerArguments>
-                    <bootclasspath>${java.home}/rt.jar</bootclasspath>
+                    <bootclasspath>${java.home}/lib/rt.jar</bootclasspath>
                 </compilerArguments>
             </configuration>
         </plugin>

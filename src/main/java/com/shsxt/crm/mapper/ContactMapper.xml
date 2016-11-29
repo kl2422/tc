@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shsxt.crm.dao.ContactDao">
+
+    <sql id="Contact_Columns">
+        id, cusId, contactTime, address, overview, createDate, updateDate, isValid
+    </sql>
+
+    <select id="selectForPage" resultType="Contact">
+        select <include refid="Contact_Columns" /> from t_customer_contact
+        <where>
+            isValid = 1
+            <if test="@Ognl@isEmpty(cusId)">
+                and cusId = #{cusId}
+            </if>
+        </where>
+
+    </select>
+
+    <insert id="insert">
+        insert into t_customer_contact (
+          cusId, contactTime, address, overview, createDate, updateDate, isValid
+        ) values(
+          #{cusId}, #{contactTime}, #{address}, #{overview}, now(), now(), 1
+        )
+    </insert>
+
+    <update id="update" parameterType="Contact">
+        update t_customer_contact
+        <set>
+            <if test="contactTime != null ">
+                contactTime = #{contactTime},
+            </if>
+            <if test="@Ognl@isNotEmpty(address)">
+                address = #{address},
+            </if>
+            <if test="@Ognl@isNotEmpty(overview)">
+                overview = #{overview},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="delete" >
+        update t_customer_contact set isValid = 0, updateDate = now() where id = #{id}
+    </update>
+
+</mapper>
