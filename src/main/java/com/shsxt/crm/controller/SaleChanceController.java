@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.shsxt.base.BaseController;
 import com.shsxt.base.ResultInfo;
 import com.shsxt.base.exception.ParamException;
+import com.shsxt.crm.annotation.OptLog;
 import com.shsxt.crm.constant.Constant;
 import com.shsxt.crm.model.SaleChance;
 import com.shsxt.crm.query.SaleChanceQuery;
@@ -34,6 +35,7 @@ public class SaleChanceController extends BaseController {
 	
 	@RequestMapping("list")
 	@ResponseBody
+	@OptLog(module="营销管理-营销机会管理", desc="读取数据")
 	public Map<String, Object> selectForPage(SaleChanceQuery query) {
 		Map<String, Object> result = saleChanceService.selectForPage(query);
 		return result;
@@ -41,6 +43,7 @@ public class SaleChanceController extends BaseController {
 	
 	@RequestMapping("add_update")
 	@ResponseBody
+	@OptLog(module="营销管理-营销机会管理", desc="新增或修改数据")
 	public ResultInfo addOrUpdate(SaleChance saleChance) {
 		try {
 			saleChanceService.addOrUpdate(saleChance);

@@ -21,4 +21,14 @@ public class LoginUserUtil {
 		return userId;
 	}
 	
+	/**
+	 * cookie中获取userName
+	 * @param request
+	 * @return
+	 */
+	public static String loadUserNameFromCookie(HttpServletRequest request) {
+		String userName = CookieUtil.getCookieValue(request, "userName");
+		return userName;
+	}
+	
 }

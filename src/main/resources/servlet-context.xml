@@ -27,6 +27,8 @@
 	<mvc:annotation-driven />
 	<!-- 定时任务的注解驱动 -->
 	<task:annotation-driven/>
+	<!-- aspect驱动 -->
+	<aop:aspectj-autoproxy />
 	
 	<!-- 视图配置 -->
 	<bean id="freemarkerConfig"
