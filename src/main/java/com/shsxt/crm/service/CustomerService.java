@@ -15,8 +15,12 @@ import com.shsxt.crm.dao.CustomerDao;
 import com.shsxt.crm.dao.CustomerLossDao;
 import com.shsxt.crm.dao.OrderDao;
 import com.shsxt.crm.model.Customer;
+import com.shsxt.crm.model.CustomerFw;
+import com.shsxt.crm.model.CustomerGc;
+import com.shsxt.crm.model.CustomerGx;
 import com.shsxt.crm.model.CustomerLoss;
 import com.shsxt.crm.model.Order;
+import com.shsxt.crm.query.CustomerGxQuery;
 import com.shsxt.crm.query.CustomerQuery;
 import com.shsxt.crm.util.AssertUtil;
 import com.shsxt.crm.util.MathUtil;
@@ -122,5 +126,44 @@ public class CustomerService {
             customerDao.update(customer);
         }
 	}
+	
+	/**
+     * 分页查询用户的贡献值
+     * @param customerGxQuery
+     * @return
+     */
+    public Map<String, Object> findCustomerGx(CustomerGxQuery customerGxQuery) {
+
+        PageList<CustomerGx> customerGxes = (PageList<CustomerGx>) customerDao.findCustomerGx(customerGxQuery,
+                customerGxQuery.initPageBounds());
+        Map<String, Object> result = new HashMap<>();
+        result.put("rows", customerGxes);
+        result.put("total", customerGxes.getPaginator().getTotalCount());
+        return result;
+    }
+    
+    /**
+     * 查询所有正常的客户
+     * @return
+     */
+	public List<Customer> findNormalCustomer() {
+		return customerDao.findNormalCustomer();
+	}
+    
+    /**
+     * 查询客户构成信息
+     * @return
+     */
+    public List<CustomerGc> findCustomerGc() {
+        return customerDao.findCustomerGc();
+    }
+
+    /**
+     * 查询客户服务信息
+     * @return
+     */
+    public List<CustomerFw> findCustomerFw() {
+        return customerDao.findCustomerFw();
+    }
 	
 }	

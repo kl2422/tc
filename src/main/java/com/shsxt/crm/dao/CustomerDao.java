@@ -5,8 +5,13 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.shsxt.base.BaseDao;
 import com.shsxt.crm.model.Customer;
+import com.shsxt.crm.model.CustomerFw;
+import com.shsxt.crm.model.CustomerGc;
+import com.shsxt.crm.model.CustomerGx;
+import com.shsxt.crm.query.CustomerGxQuery;
 import com.shsxt.crm.vo.CustomerVo;
 
 public interface CustomerDao extends BaseDao<Customer> {
@@ -21,6 +26,33 @@ public interface CustomerDao extends BaseDao<Customer> {
 	public List<Customer> findNoOrdersCustomer();
 
 	public List<Customer> findLossCustomer();
+	
+	/**
+	 * 客户构成分析
+	 * @return
+	 */
+	public List<CustomerGc> findCustomerGc();
+	
+	/**
+     * 查询客户贡献记录数
+     * @param customerGxQuery
+     * @param pageBounds
+     * @return
+     */
+    public List<CustomerGx> findCustomerGx(CustomerGxQuery customerGxQuery, PageBounds pageBounds);
+
+    /**
+     * 查询客户服务分析
+     * @return
+     */
+    public List<CustomerFw> findCustomerFw();
+
+    
+    /**
+     * 获取正常的客户
+     * @return
+     */
+	public List<Customer> findNormalCustomer();
 	
 	
 
