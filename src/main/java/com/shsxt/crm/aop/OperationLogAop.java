@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,8 @@ public class OperationLogAop {
 	private MongoTemplate mongoTemplate;
 	@Autowired
 	private HttpServletRequest request;
+	@Autowired
+	private RabbitTemplate rabbitTemplate;
 	
 	@Pointcut(value = "@annotation(com.shsxt.crm.annotation.OptLog)")
 	public void pointcut() {
@@ -34,7 +37,6 @@ public class OperationLogAop {
 		
 		String module = optLog.module();
 		String desc = optLog.desc();
-		
 		OperationLog operationLog = new OperationLog();
 		operationLog.setArgs(pjp.getArgs());
 		operationLog.setDesc(desc);
@@ -45,7 +47,10 @@ public class OperationLogAop {
 		operationLog.setOptUserId(userId);
 		String userName = LoginUserUtil.loadUserNameFromCookie(request);
 		operationLog.setOptUserName(userName);
-		mongoTemplate.save(operationLog);
+		// 发送至消息队列中
+		rabbitTemplate.convertAndSend(operationLog);
+		
+//		mongoTemplate.save(operationLog);
 		return pjp.proceed();
 		
 	}
