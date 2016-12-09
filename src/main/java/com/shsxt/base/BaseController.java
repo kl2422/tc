@@ -12,7 +12,7 @@ public class BaseController {
 	
 	@ModelAttribute
 	protected void preMethod(HttpServletRequest request, Model model) {
-		model.addAttribute("ctx", request.getContextPath());
+		model.addAttribute("ctx", request.getContextPath());   
 	}
 	
 	/**
